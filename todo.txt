@@ -1,0 +1,12 @@
+1. Data Sources & Popularity Evidence
+YouTube (n8n workflow videos)
+Popularity signals:
+    ● View count
+    ● Like count
+    ● Comment count
+    ● Engagement ratios:
+○        like_to_view_ratio = likes ÷ views
+○        comment_to_view_ratio = comments ÷ views
+API hint: YouTube Data API v3 (https://developers.google.com/youtube/v3)
+Evidence Example: "Automating Gmail with n8n" → 18,400 views, 920 likes, 112
+comments → strong engagement.

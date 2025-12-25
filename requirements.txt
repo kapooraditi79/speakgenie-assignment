@@ -1,0 +1,12 @@
+fastapi
+flask
+uvicorn
+sqlalchemy
+pymysql
+requests
+google-api-python-client
+pytrends
+schedule
+python-dotenv
+mysql-connector-python
+pandas
