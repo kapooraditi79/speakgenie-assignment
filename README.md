@@ -122,7 +122,7 @@ To automate this on a Windows machine, use **Task Scheduler** :
 - `src/api.py`: The Flask API Server.
 - `src/fetch_*.py`: Modular scrapers for each platform.
 - `src/database.py`: Database connection logic.
-- `workflows_dump.sql`: Data backup
+- `src/workflows_dump.sql`: Data backup
 
 ## 📝 Sample API Responses
 
