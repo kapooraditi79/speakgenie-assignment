@@ -5,11 +5,10 @@ def reset_table():
     if conn is None: return
     cursor = conn.cursor()
 
-    # 1. Drop the old table (Warning: Deletes all data!)
+    # Drop the old table
     cursor.execute("DROP TABLE IF EXISTS workflows;")
 
-    # 2. Create the new, correct table
-    # Added: CHARACTER SET utf8mb4 to handle emojis in titles
+    # Create the new table
     create_query = """
     CREATE TABLE workflows (
         id INT AUTO_INCREMENT PRIMARY KEY,

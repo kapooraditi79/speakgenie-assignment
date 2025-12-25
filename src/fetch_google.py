@@ -11,10 +11,9 @@ def fetch_google_trends(keywords=None):
     if keywords is None:
         keywords = ["n8n workflow", "n8n automation", "n8n tutorial", "n8n vs zapier", "n8n integration"]
 
-    # Google Trends allows max 5 keywords per request
     kw_list = keywords[:5]
     
-    # We must fetch US and IN separately to get correct segmentation
+    # fetch US and IN seperately
     target_geos = ['US', 'IN'] 
     
     results = []
@@ -25,34 +24,31 @@ def fetch_google_trends(keywords=None):
         print(f"[{geo}] Connecting to Google Trends for: {keywords}...")
         
         try:
-            # 1. Build Payload
             # 'today 3-m' returns DAILY data for the last 90 days
             pytrends.build_payload(kw_list, cat=0, timeframe='today 3-m', geo=geo) 
 
-            # 2. Get Interest Over Time
+            # Interest Over Time
             data = pytrends.interest_over_time()    # returns pandas dataframe. 
             
             if data.empty:
                 print(f"[{geo}] No data returned.")
                 continue
 
-            # 3. Process Each Keyword
+            # Process Each Keyword
             for keyword in keywords:
                 if keyword not in data.columns:
                     continue
                 
                 series = data[keyword]
                 
-                # --- ANALYTICS FIX: Daily Data Handling ---
-                # Since 'today 3-m' gives daily data, we need 30 points for a month.
-                # If we only got weekly data (rare for 3-m), we adjust.
+                # Since 'today 3-m' gives daily data, need 30 points for a month.
                 
                 data_points = len(series)
                 if data_points > 80: 
-                    # We have Daily Data (~90 points)
+                    # Daily Data (~90 points)
                     window_size = 30 
                 else:
-                    # We have Weekly Data (~12 points)
+                    # Weekly Data (~12 points)
                     window_size = 4 
 
                 # Calculate Trend: Last 30 days vs Previous 30 days
@@ -76,8 +72,7 @@ def fetch_google_trends(keywords=None):
                     "url": f"https://trends.google.com/trends/explore?date=today%203-m&geo={geo}&q={keyword.replace(' ', '%20')}",
                     "platform": "Google Trends",
                     "views": 0,
-                    # We store Growth % in 'likes' and Current Score (0-100) in 'comments'
-                    # so we can reuse the DB columns logically.
+                    # store Growth % in 'likes' and Current Score (0-100) in 'comments'
                     "likes": int(growth_percent), 
                     "comments": current_score, 
                     "popularity_score": current_score + (growth_percent * 2),
@@ -86,7 +81,6 @@ def fetch_google_trends(keywords=None):
                 }
                 results.append(entry)
 
-            # SLEEP is critical here to avoid 429 Errors between US and IN requests
             time.sleep(random.uniform(2, 5))
 
         except Exception as e:

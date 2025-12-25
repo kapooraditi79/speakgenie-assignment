@@ -34,7 +34,6 @@ CREATE TABLE workflows (
         
         values_list = []
         for r in rows:
-            # Format strings safely
             name = r[1].replace("'", "''").replace("\\", "\\\\")
             platform = r[2]
             url = r[3]
