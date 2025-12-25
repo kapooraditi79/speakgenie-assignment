@@ -6,7 +6,7 @@ A production-ready data pipeline that identifies popular n8n workflows across Yo
 
 1. **Automated ETL Pipeline (`main.py`):** Fetches and updates data idempotently (no duplicates).
 2. **REST API (`api.py`):** Serves the curated dataset as JSON.
-3. **Dataset Dump (`workflows_dump.sql`):** Pre-fetched data for immediate testing.
+3. **Dataset Dump (`workflows_dump.sql`):** Pre-fetched dataset containing **over 50 workflows** with popularity evidence, ready for import.
 
 ## 🚀 Setup & Installation
 
